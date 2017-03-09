@@ -9,7 +9,7 @@ import kotlin.time.Duration.Companion.milliseconds
 /**
  * Defines how delay between retry attempts is calculated.
  */
-sealed interface BackoffStrategy {
+public sealed interface BackoffStrategy {
 
     /**
      * Calculates the delay duration for the given attempt number.
@@ -17,14 +17,14 @@ sealed interface BackoffStrategy {
      * @param attempt The attempt number (0-based, where 0 is the delay before the first retry).
      * @return The duration to wait before the next attempt.
      */
-    fun delayFor(attempt: Int): Duration
+    public fun delayFor(attempt: Int): Duration
 
     /**
      * Fixed delay between each retry attempt.
      *
      * @property delay The constant delay duration.
      */
-    data class Fixed(val delay: Duration) : BackoffStrategy {
+    public data class Fixed(public val delay: Duration) : BackoffStrategy {
         override fun delayFor(attempt: Int): Duration = delay
     }
 
@@ -37,10 +37,10 @@ sealed interface BackoffStrategy {
      * @property max The maximum delay duration.
      * @property multiplier The factor by which the delay increases each attempt.
      */
-    data class Exponential(
-        val base: Duration,
-        val max: Duration,
-        val multiplier: Double = 2.0,
+    public data class Exponential(
+        public val base: Duration,
+        public val max: Duration,
+        public val multiplier: Double = 2.0,
     ) : BackoffStrategy {
         override fun delayFor(attempt: Int): Duration {
             val delayMs = base.inWholeMilliseconds * multiplier.pow(attempt)
@@ -57,10 +57,10 @@ sealed interface BackoffStrategy {
      * @property max The maximum delay duration.
      * @property jitterFactor The fraction of the delay to randomize (e.g., 0.1 means +/-10%).
      */
-    data class ExponentialWithJitter(
-        val base: Duration,
-        val max: Duration,
-        val jitterFactor: Double = 0.1,
+    public data class ExponentialWithJitter(
+        public val base: Duration,
+        public val max: Duration,
+        public val jitterFactor: Double = 0.1,
     ) : BackoffStrategy {
         override fun delayFor(attempt: Int): Duration {
             val delayMs = base.inWholeMilliseconds * 2.0.pow(attempt)

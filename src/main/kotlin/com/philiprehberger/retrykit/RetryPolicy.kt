@@ -23,7 +23,7 @@ import kotlin.time.Duration.Companion.seconds
  * val result = policy.execute { riskyOperation() }
  * ```
  */
-class RetryPolicy internal constructor(
+public class RetryPolicy internal constructor(
     private val maxAttempts: Int,
     private val backoff: BackoffStrategy,
     private val retryOnPredicates: List<(Throwable) -> Boolean>,
@@ -38,7 +38,7 @@ class RetryPolicy internal constructor(
      * @return The result of the first successful execution.
      * @throws Throwable The last exception if all attempts fail.
      */
-    suspend fun <T> execute(block: suspend () -> T): T {
+    public suspend fun <T> execute(block: suspend () -> T): T {
         return retry(
             maxAttempts = maxAttempts,
             backoff = backoff,
@@ -51,7 +51,7 @@ class RetryPolicy internal constructor(
     /**
      * Builder DSL for constructing a [RetryPolicy].
      */
-    class Builder {
+    public class Builder {
         private var maxAttempts: Int = 3
         private var backoff: BackoffStrategy = BackoffStrategy.Fixed(100.milliseconds)
         private val retryOnPredicates = mutableListOf<(Throwable) -> Boolean>()
@@ -60,7 +60,7 @@ class RetryPolicy internal constructor(
         /**
          * Sets the maximum number of attempts (including the initial call).
          */
-        fun maxAttempts(value: Int) {
+        public fun maxAttempts(value: Int) {
             require(value >= 1) { "maxAttempts must be at least 1" }
             this.maxAttempts = value
         }
@@ -68,7 +68,7 @@ class RetryPolicy internal constructor(
         /**
          * Uses a fixed backoff delay between retries.
          */
-        fun fixedBackoff(delay: Duration) {
+        public fun fixedBackoff(delay: Duration) {
             this.backoff = BackoffStrategy.Fixed(delay)
         }
 
@@ -79,7 +79,7 @@ class RetryPolicy internal constructor(
          * @param max The maximum delay cap.
          * @param multiplier The growth factor per attempt.
          */
-        fun exponentialBackoff(base: Duration, max: Duration = 30.seconds, multiplier: Double = 2.0) {
+        public fun exponentialBackoff(base: Duration, max: Duration = 30.seconds, multiplier: Double = 2.0) {
             this.backoff = BackoffStrategy.Exponential(base, max, multiplier)
         }
 
@@ -91,7 +91,7 @@ class RetryPolicy internal constructor(
          *
          * @param factor The jitter fraction (e.g., 0.1 = +/-10%).
          */
-        fun jitter(factor: Double) {
+        public fun jitter(factor: Double) {
             val current = backoff
             if (current is BackoffStrategy.Exponential) {
                 this.backoff = BackoffStrategy.ExponentialWithJitter(current.base, current.max, factor)
@@ -101,14 +101,14 @@ class RetryPolicy internal constructor(
         /**
          * Only retry on exceptions of the specified type.
          */
-        inline fun <reified T : Throwable> retryOn() {
+        public inline fun <reified T : Throwable> retryOn() {
             retryOn(T::class)
         }
 
         /**
          * Only retry on exceptions of the specified type.
          */
-        fun retryOn(exceptionClass: KClass<out Throwable>) {
+        public fun retryOn(exceptionClass: KClass<out Throwable>) {
             retryOnPredicates.add { exceptionClass.isInstance(it) }
         }
 
@@ -117,7 +117,7 @@ class RetryPolicy internal constructor(
          *
          * @param callback Receives the attempt number (1-based) and the exception.
          */
-        fun onRetry(callback: (Int, Throwable) -> Unit) {
+        public fun onRetry(callback: (Int, Throwable) -> Unit) {
             this.onRetryCallback = callback
         }
 
@@ -144,6 +144,6 @@ class RetryPolicy internal constructor(
  * @param block Configuration block for the policy builder.
  * @return A configured [RetryPolicy] instance.
  */
-fun retryPolicy(block: RetryPolicy.Builder.() -> Unit): RetryPolicy {
+public fun retryPolicy(block: RetryPolicy.Builder.() -> Unit): RetryPolicy {
     return RetryPolicy.Builder().apply(block).build()
 }
