@@ -42,6 +42,10 @@ publishing {
                 licenses { license { name.set("MIT License"); url.set("https://opensource.org/licenses/MIT") } }
                 developers { developer { id.set("philiprehberger"); name.set("Philip Rehberger") } }
                 scm { url.set("https://github.com/philiprehberger/kt-retry-kit"); connection.set("scm:git:git://github.com/philiprehberger/kt-retry-kit.git"); developerConnection.set("scm:git:ssh://github.com/philiprehberger/kt-retry-kit.git") }
+                issueManagement {
+                    system.set("GitHub Issues")
+                    url.set("https://github.com/philiprehberger/kt-retry-kit/issues")
+                }
             }
         }
     }
