@@ -1,13 +1,10 @@
-# kt-retry-kit
+# retry-kit
 
 [![CI](https://github.com/philiprehberger/kt-retry-kit/actions/workflows/publish.yml/badge.svg)](https://github.com/philiprehberger/kt-retry-kit/actions/workflows/publish.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/com.philiprehberger/retry-kit)](https://central.sonatype.com/artifact/com.philiprehberger/retry-kit)
+[![License](https://img.shields.io/github/license/philiprehberger/kt-retry-kit)](LICENSE)
 
 Coroutine-native retry with configurable backoff strategies for Kotlin.
-
-## Requirements
-
-- Kotlin 1.9+ / Java 17+
 
 ## Installation
 
@@ -15,7 +12,7 @@ Coroutine-native retry with configurable backoff strategies for Kotlin.
 
 ```kotlin
 dependencies {
-    implementation("com.philiprehberger:retry-kit:0.1.0")
+    implementation("com.philiprehberger:retry-kit:0.1.4")
 }
 ```
 
@@ -33,7 +30,7 @@ dependencies {
 <dependency>
     <groupId>com.philiprehberger</groupId>
     <artifactId>retry-kit</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.4</version>
 </dependency>
 ```
 
