@@ -1,6 +1,6 @@
 # kt-retry-kit
 
-[![CI](https://github.com/philiprehberger/kt-retry-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/philiprehberger/kt-retry-kit/actions/workflows/ci.yml)
+[![CI](https://github.com/philiprehberger/kt-retry-kit/actions/workflows/publish.yml/badge.svg)](https://github.com/philiprehberger/kt-retry-kit/actions/workflows/publish.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/com.philiprehberger/retry-kit)](https://central.sonatype.com/artifact/com.philiprehberger/retry-kit)
 
 Coroutine-native retry with configurable backoff strategies for Kotlin.
