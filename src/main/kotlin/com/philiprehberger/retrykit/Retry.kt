@@ -19,7 +19,7 @@ import kotlin.time.Duration.Companion.milliseconds
  * @return The result of the first successful execution of [block].
  * @throws Throwable The last exception if all attempts fail, or [CancellationException] immediately.
  */
-suspend fun <T> retry(
+public suspend fun <T> retry(
     maxAttempts: Int = 3,
     backoff: BackoffStrategy = BackoffStrategy.Fixed(100.milliseconds),
     retryOn: (Throwable) -> Boolean = { true },
