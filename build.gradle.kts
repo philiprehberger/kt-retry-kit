@@ -39,9 +39,23 @@ publishing {
                 name.set("retry-kit")
                 description.set("Coroutine-native retry with configurable backoff strategies for Kotlin")
                 url.set("https://github.com/philiprehberger/kt-retry-kit")
-                licenses { license { name.set("MIT License"); url.set("https://opensource.org/licenses/MIT") } }
-                developers { developer { id.set("philiprehberger"); name.set("Philip Rehberger") } }
-                scm { url.set("https://github.com/philiprehberger/kt-retry-kit"); connection.set("scm:git:git://github.com/philiprehberger/kt-retry-kit.git"); developerConnection.set("scm:git:ssh://github.com/philiprehberger/kt-retry-kit.git") }
+                licenses {
+                    license {
+                        name.set("MIT License")
+                        url.set("https://opensource.org/licenses/MIT")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("philiprehberger")
+                        name.set("Philip Rehberger")
+                    }
+                }
+                scm {
+                    url.set("https://github.com/philiprehberger/kt-retry-kit")
+                    connection.set("scm:git:git://github.com/philiprehberger/kt-retry-kit.git")
+                    developerConnection.set("scm:git:ssh://github.com/philiprehberger/kt-retry-kit.git")
+                }
                 issueManagement {
                     system.set("GitHub Issues")
                     url.set("https://github.com/philiprehberger/kt-retry-kit/issues")
@@ -49,18 +63,22 @@ publishing {
             }
         }
     }
-    repositories { maven { name = "OSSRH"; url = uri("https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/"); credentials { username = System.getenv("OSSRH_USERNAME"); password = System.getenv("OSSRH_PASSWORD") } } }
+    repositories {
+        maven {
+            name = "OSSRH"
+            url = uri("https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/")
+            credentials {
+                username = System.getenv("OSSRH_USERNAME")
+                password = System.getenv("OSSRH_PASSWORD")
+            }
+        }
+    }
 }
 
 signing {
-    val signingKey = System.getenv("GPG_PRIVATE_KEY")
-    val signingPassword = System.getenv("GPG_PASSPHRASE")
-    if (signingKey != null && signingPassword != null) {
-        useInMemoryPgpKeys(signingKey, signingPassword)
-    }
+    useInMemoryPgpKeys(
+        System.getenv("GPG_PRIVATE_KEY"),
+        System.getenv("GPG_PASSPHRASE")
+    )
     sign(publishing.publications["maven"])
-}
-
-tasks.withType<Sign>().configureEach {
-    onlyIf { System.getenv("GPG_PRIVATE_KEY") != null }
 }
